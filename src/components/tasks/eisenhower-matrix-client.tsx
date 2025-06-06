@@ -66,7 +66,7 @@ export function EisenhowerMatrixClient() {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 relative h-[calc(100vh-3.5rem)] md:h-[calc((100vh-3.5rem)/2)]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 relative h-[calc(100vh-3.5rem)]">
         {[...Array(4)].map((_, i) => (
           <Skeleton key={i} className="h-full w-full rounded-lg" />
         ))}
@@ -76,9 +76,9 @@ export function EisenhowerMatrixClient() {
 
   return (
     <div className="flex flex-col items-center w-full">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 p-0 md:p-4 w-full relative mb-20 md:mb-0 h-[calc(100vh-3.5rem)] md:h-[calc((100vh-3.5rem)/2)]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 p-0 md:p-4 w-full relative mb-20 md:mb-0 h-[calc(100vh-3.5rem)]">
         {quadrantInfos.map(qInfo => (
-          <div key={qInfo.id} onDragLeave={handleDragLeaveQuadrant} className="h-full"> {/* Ensure grid cell child also takes full height if needed */}
+          <div key={qInfo.id} onDragLeave={handleDragLeaveQuadrant} className="h-full">
             <Quadrant
               quadrantInfo={qInfo}
               tasks={getTasksByQuadrant(qInfo.id)}
@@ -128,3 +128,4 @@ export function EisenhowerMatrixClient() {
     </div>
   );
 }
+
