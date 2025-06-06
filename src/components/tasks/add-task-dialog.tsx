@@ -1,6 +1,7 @@
+
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -9,13 +10,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogFooter,
-  DialogClose
 } from "@/components/ui/dialog";
 import { AddTaskForm } from "./add-task-form";
 import type { Task } from "@/types";
 import { PlusCircle, Edit } from "lucide-react";
-import { useState } from "react";
 
 interface AddTaskDialogProps {
   onAddTask: (taskData: Omit<Task, 'id' | 'createdAt'>) => boolean;
@@ -23,26 +21,47 @@ interface AddTaskDialogProps {
   triggerButton?: React.ReactNode;
   initialTaskData?: Task;
   isEditMode?: boolean;
+  open?: boolean; // Prop to control dialog visibility externally
+  onOpenChange?: (isOpen: boolean) => void; // Callback for when dialog requests a visibility change
 }
 
-export function AddTaskDialog({ onAddTask, onEditTask, triggerButton, initialTaskData, isEditMode = false }: AddTaskDialogProps) {
-  const [open, setOpen] = useState(false);
+export function AddTaskDialog({
+  onAddTask,
+  onEditTask,
+  triggerButton,
+  initialTaskData,
+  isEditMode = false,
+  open: openProp,
+  onOpenChange: onOpenChangeProp,
+}: AddTaskDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const isControlled = openProp !== undefined;
+  const currentOpenState = isControlled ? openProp : internalOpen;
+
+  const handleOpenChange = (newOpenState: boolean) => {
+    if (isControlled && onOpenChangeProp) {
+      onOpenChangeProp(newOpenState);
+    } else if (!isControlled) {
+      setInternalOpen(newOpenState);
+    }
+  };
 
   const handleSubmit = (values: Omit<Task, 'id' | 'createdAt'>) => {
     let success = false;
     if (isEditMode && onEditTask && initialTaskData) {
       onEditTask({ ...initialTaskData, ...values });
-      success = true; // Assume edit is always successful for UI closure
+      success = true;
     } else {
       success = onAddTask(values);
     }
     if (success) {
-      setOpen(false);
+      handleOpenChange(false); // Close dialog using the unified handler
     }
   };
   
   const defaultTrigger = isEditMode ? (
-    <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setOpen(true)}>
+    <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => handleOpenChange(true)}>
       <Edit className="h-4 w-4" />
       <span className="sr-only">Edit Task</span>
     </Button>
@@ -51,7 +70,7 @@ export function AddTaskDialog({ onAddTask, onEditTask, triggerButton, initialTas
       variant="default" 
       size="lg" 
       className="fixed bottom-6 right-6 md:static rounded-full md:rounded-md p-4 md:p-2 shadow-lg md:shadow-sm bg-primary hover:bg-primary/90 text-primary-foreground"
-      onClick={() => setOpen(true)}
+      onClick={() => handleOpenChange(true)}
       aria-label="Add new task"
     >
       <PlusCircle className="h-6 w-6 md:mr-2" />
@@ -59,11 +78,10 @@ export function AddTaskDialog({ onAddTask, onEditTask, triggerButton, initialTas
     </Button>
   );
 
-
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={currentOpenState} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        {triggerButton ? React.cloneElement(triggerButton as React.ReactElement, { onClick: () => setOpen(true) }) : defaultTrigger}
+        {triggerButton ? React.cloneElement(triggerButton as React.ReactElement, { onClick: () => handleOpenChange(true) }) : defaultTrigger}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
