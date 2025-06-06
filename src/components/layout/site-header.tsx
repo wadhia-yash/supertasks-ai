@@ -1,9 +1,10 @@
+
 "use client";
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/components/auth/auth-provider';
-import { LogIn, LogOut, User, Crown, UserCircle2 } from 'lucide-react';
+import { LogIn, LogOut, User, Crown, UserCircle2, Settings, LayoutDashboard } from 'lucide-react'; // Added Settings, LayoutDashboard
 
 export function SiteHeader() {
   const { user, loginAsGuest, loginAsAuthenticated, loginAsSubscribed, logout } = useAuth();
@@ -19,10 +20,22 @@ export function SiteHeader() {
             PrioritizeIt
           </span>
         </Link>
-        <nav className="flex flex-1 items-center space-x-4">
+        <nav className="flex flex-1 items-center space-x-2 sm:space-x-4">
           <Link href="/pricing" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">Pricing</Link>
           <Link href="/about" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">About</Link>
           <Link href="/feedback" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">Feedback</Link>
+          {user && (user.role === 'authenticated' || user.role === 'subscribed') && (
+            <>
+              <Link href="/workspace" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary flex items-center">
+                <LayoutDashboard className="h-4 w-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">Workspace</span>
+              </Link>
+              <Link href="/settings" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary flex items-center">
+                <Settings className="h-4 w-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">Settings</span>
+              </Link>
+            </>
+          )}
         </nav>
         <div className="flex items-center space-x-2">
           {user ? (
@@ -30,12 +43,24 @@ export function SiteHeader() {
               <span className="text-sm text-muted-foreground hidden md:inline">
                 Welcome, {user.displayName || user.role}!
               </span>
-              {user.role === 'guest' && <Button variant="ghost" size="sm" onClick={loginAsAuthenticated}><LogIn className="mr-2 h-4 w-4" /> Login</Button>}
-              {user.role === 'authenticated' && <Button variant="ghost" size="sm" onClick={loginAsSubscribed}><Crown className="mr-2 h-4 w-4" /> Upgrade</Button>}
-              <Button variant="outline" size="sm" onClick={logout}><LogOut className="mr-2 h-4 w-4" /> Logout</Button>
+              {user.role === 'guest' && (
+                <Button variant="ghost" size="sm" onClick={loginAsAuthenticated}>
+                  <LogIn className="mr-2 h-4 w-4" /> Login
+                </Button>
+              )}
+              {user.role === 'authenticated' && (
+                <Button variant="ghost" size="sm" onClick={loginAsSubscribed}>
+                  <Crown className="mr-2 h-4 w-4" /> Upgrade
+                </Button>
+              )}
+              <Button variant="outline" size="sm" onClick={logout}>
+                <LogOut className="mr-2 h-4 w-4" /> Logout
+              </Button>
             </>
           ) : (
-            <Button variant="ghost" size="sm" onClick={loginAsGuest}><UserCircle2 className="mr-2 h-4 w-4" /> Login as Guest</Button>
+            <Button variant="ghost" size="sm" onClick={loginAsGuest}>
+              <UserCircle2 className="mr-2 h-4 w-4" /> Login as Guest
+            </Button>
           )}
         </div>
       </div>
