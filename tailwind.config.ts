@@ -8,10 +8,17 @@ export default {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
       fontFamily: {
-        body: ['Inter', 'sans-serif'],
-        headline: ['Inter', 'sans-serif'],
+        body: ['Poppins', 'sans-serif'],
+        headline: ['Poppins', 'sans-serif'],
         code: ['monospace'],
       },
       colors: {
@@ -55,7 +62,7 @@ export default {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
-        sidebar: {
+        sidebar: { // Keep sidebar vars in case they are used by some shadcn components internally
           DEFAULT: 'hsl(var(--sidebar-background))',
           foreground: 'hsl(var(--sidebar-foreground))',
           primary: 'hsl(var(--sidebar-primary))',
