@@ -37,7 +37,7 @@ export default function FeedbackPage() {
         <CardHeader className="text-center">
           <CardTitle className="text-4xl font-bold mb-2 font-headline">Share Your Feedback</CardTitle>
           <CardDescription>
-            We value your input! Let us know how we can improve PrioritizeIt.
+            We value your input! Let us know how we can improve supertasks.ai.
           </CardDescription>
         </CardHeader>
         <CardContent>

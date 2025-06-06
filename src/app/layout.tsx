@@ -5,7 +5,7 @@ import { SiteHeader } from '@/components/layout/site-header';
 import { AuthProvider } from '@/components/auth/auth-provider';
 
 export const metadata: Metadata = {
-  title: 'PrioritizeIt - Eisenhower Matrix Task Management',
+  title: 'supertasks.ai - Eisenhower Matrix Task Management',
   description: 'Manage your tasks effectively with the Eisenhower Matrix. Prioritize tasks based on urgency and importance.',
 };
 

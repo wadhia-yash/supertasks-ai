@@ -27,7 +27,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Simulate loading user from storage or API
-    const storedUserRole = localStorage.getItem('prioritizeit-user-role') as UserRole | null;
+    const storedUserRole = localStorage.getItem('supertasks-user-role') as UserRole | null;
     if (storedUserRole) {
       updateUserRole(storedUserRole);
     } else {
@@ -50,7 +50,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setTaskLimit(GUEST_LIMIT);
     }
     setUser(newUser);
-    localStorage.setItem('prioritizeit-user-role', role);
+    localStorage.setItem('supertasks-user-role', role);
   };
 
   const loginAsGuest = () => updateUserRole('guest');
@@ -58,7 +58,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const loginAsSubscribed = () => updateUserRole('subscribed');
   
   const logout = () => {
-    localStorage.removeItem('prioritizeit-user-role');
+    localStorage.removeItem('supertasks-user-role');
     loginAsGuest(); // Revert to guest after logout
   };
 

@@ -1,4 +1,4 @@
-# **App Name**: PrioritizeIt
+# **App Name**: supertasks.ai
 
 ## Core Features:
 

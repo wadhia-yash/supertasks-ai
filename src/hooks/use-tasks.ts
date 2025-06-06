@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/components/auth/auth-provider';
 import { useToast } from '@/hooks/use-toast';
 
-const LOCAL_STORAGE_KEY = 'prioritizeit-tasks';
+const LOCAL_STORAGE_KEY = 'supertasks-tasks';
 
 export function useTasks() {
   const [tasks, setTasks] = useState<Task[]>([]);

@@ -17,7 +17,7 @@ export function SiteHeader() {
             <path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM17 14h4v4h-4zM14 17.5h3M17 15.5V14M7 11.5V3M10.5 7H3"/>
           </svg>
           <span className="font-bold sm:inline-block font-headline">
-            PrioritizeIt
+            supertasks.ai
           </span>
         </Link>
         <nav className="flex flex-1 items-center space-x-2 sm:space-x-4">
