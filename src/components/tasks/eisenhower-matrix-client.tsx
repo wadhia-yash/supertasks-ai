@@ -65,7 +65,7 @@ export function EisenhowerMatrixClient() {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 relative h-[calc(100vh-3.5rem)]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-0.5 p-0 w-full h-full">
         {[...Array(4)].map((_, i) => (
           <Skeleton key={i} className="h-full w-full rounded-lg" />
         ))}
@@ -130,4 +130,3 @@ export function EisenhowerMatrixClient() {
     </div>
   );
 }
-

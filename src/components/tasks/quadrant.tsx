@@ -38,14 +38,14 @@ export function Quadrant({
       onDrop={() => onDropTask(quadrantInfo.id)}
       onDragOver={onDragOver}
     >
-      <CardHeader className="p-3 md:p-4 border-b">
+      <CardHeader className="p-1 md:p-2 border-b">
         <CardTitle className={`text-sm md:text-base font-bold ${quadrantInfo.color.replace('bg-', 'text-')}`}>{quadrantInfo.title}</CardTitle>
         <CardDescription className="text-xs hidden md:block">{quadrantInfo.description}</CardDescription>
       </CardHeader>
-      <CardContent className="p-2 md:p-3 flex-grow overflow-y-auto">
+      <CardContent className="p-1 md:p-2 flex-grow overflow-y-auto min-h-0">
         {tasks.length === 0 && (
-          <div className="flex items-center justify-center h-full text-sm text-muted-foreground">
-            Drop tasks here
+          <div className="flex items-center justify-center h-full text-xs text-muted-foreground">
+            Drop tasks here or click '+' to add
           </div>
         )}
         {tasks.map(task => (

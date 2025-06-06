@@ -2,7 +2,7 @@ import { EisenhowerMatrixClient } from "@/components/tasks/eisenhower-matrix-cli
 
 export default function HomePage() {
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       <EisenhowerMatrixClient />
     </div>
   );
