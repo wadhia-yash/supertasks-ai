@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { QuadrantId, QuadrantInfo, Task } from '@/types';
@@ -21,7 +22,6 @@ export function EisenhowerMatrixClient() {
   const [draggingTaskId, setDraggingTaskId] = useState<string | null>(null);
   const [dragOverQuadrant, setDragOverQuadrant] = useState<QuadrantId | null>(null);
   
-  // For editing tasks
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
@@ -66,9 +66,9 @@ export function EisenhowerMatrixClient() {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 relative">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 relative h-[calc(100vh-3.5rem)] md:h-[calc((100vh-3.5rem)/2)]">
         {[...Array(4)].map((_, i) => (
-          <Skeleton key={i} className="h-[300px] w-full rounded-lg" />
+          <Skeleton key={i} className="h-full w-full rounded-lg" />
         ))}
       </div>
     );
@@ -76,9 +76,9 @@ export function EisenhowerMatrixClient() {
 
   return (
     <div className="flex flex-col items-center w-full">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 p-0 md:p-4 w-full relative mb-20 md:mb-0">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 p-0 md:p-4 w-full relative mb-20 md:mb-0 h-[calc(100vh-3.5rem)] md:h-[calc((100vh-3.5rem)/2)]">
         {quadrantInfos.map(qInfo => (
-          <div key={qInfo.id} onDragLeave={handleDragLeaveQuadrant}>
+          <div key={qInfo.id} onDragLeave={handleDragLeaveQuadrant} className="h-full"> {/* Ensure grid cell child also takes full height if needed */}
             <Quadrant
               quadrantInfo={qInfo}
               tasks={getTasksByQuadrant(qInfo.id)}
@@ -120,54 +120,11 @@ export function EisenhowerMatrixClient() {
           isEditMode
           initialTaskData={editingTask}
           onEditTask={handleEditTask}
-          open={isEditDialogOpen} // Control dialog visibility
-          onOpenChange={setIsEditDialogOpen} // For closing via X or overlay click
-          triggerButton={<span />} // No visible trigger, controlled by state
+          open={isEditDialogOpen}
+          onOpenChange={setIsEditDialogOpen}
+          triggerButton={<span />} 
         />
       )}
     </div>
   );
 }
-
-// Wrapper for AddTaskDialog to control open state for editing
-interface ControlledAddTaskDialogProps {
-  isEditMode: boolean;
-  initialTaskData: Task | null;
-  onEditTask: (taskData: Task) => void;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  triggerButton?: React.ReactNode; // Make trigger optional as it's controlled
-}
-
-function ControlledAddTaskDialog({ open, onOpenChange, ...props }: ControlledAddTaskDialogProps) {
-  if (!props.initialTaskData && props.isEditMode) return null; // Don't render if no task to edit
-
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[480px]">
-        <DialogHeader>
-          <DialogTitle>{props.isEditMode ? 'Edit Task' : 'Add New Task'}</DialogTitle>
-          <DialogDescription>
-            {props.isEditMode ? 'Update the details of your task.' : 'Enter the details of your new task.'}
-          </DialogDescription>
-        </DialogHeader>
-        <AddTaskForm 
-          onSubmit={props.isEditMode && props.initialTaskData ? 
-            (values) => props.onEditTask({ ...props.initialTaskData!, ...values }) : 
-            () => {} /* Should not be called for add mode here */
-          } 
-          initialData={props.initialTaskData || undefined} 
-          isEditMode={props.isEditMode} 
-        />
-      </DialogContent>
-    </Dialog>
-  );
-}
-
-// This ensures ControlledAddTaskDialog is only rendered when needed
-// and its open state is managed by EisenhowerMatrixClient.
-// The original AddTaskDialog structure from above is used for 'add new task'.
-// The one for editing uses the state `isEditDialogOpen` and `editingTask`.
-// The `ControlledAddTaskDialog` above is an alternative pattern but might be overly complex.
-// The existing structure for AddTaskDialog (using it directly for edit mode) is better.
-// I'll remove the `ControlledAddTaskDialog` as AddTaskDialog already handles this via props.

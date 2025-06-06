@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { Task, QuadrantId, QuadrantInfo } from '@/types';
@@ -33,7 +34,7 @@ export function Quadrant({
 
   return (
     <Card 
-      className={`flex flex-col h-full min-h-[200px] md:min-h-[300px] transition-all duration-150 ease-in-out shadow-lg border-t-4 ${baseBorder} ${isOver ? 'bg-muted scale-[1.02]' : 'bg-card'}`}
+      className={`flex flex-col h-full transition-all duration-150 ease-in-out shadow-lg border-t-4 ${baseBorder} ${isOver ? 'bg-muted scale-[1.02]' : 'bg-card'}`}
       onDrop={() => onDropTask(quadrantInfo.id)}
       onDragOver={onDragOver}
     >
