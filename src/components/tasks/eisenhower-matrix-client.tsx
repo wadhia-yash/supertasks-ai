@@ -1,4 +1,3 @@
-
 "use client";
 
 import type { QuadrantId, QuadrantInfo, Task } from '@/types';
@@ -76,9 +75,12 @@ export function EisenhowerMatrixClient() {
 
   return (
     <div className="flex flex-col items-center w-full">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 p-0 md:p-4 w-full relative mb-20 md:mb-0 h-[calc(100vh-3.5rem)]">
+      <div
+        className="grid grid-cols-1 grid-rows-4 md:grid-cols-2 md:grid-rows-2 w-full h-[calc(100vh-3.5rem)] max-h-[calc(100vh-3.5rem)] min-h-0"
+        style={{ minHeight: 0 }}
+      >
         {quadrantInfos.map(qInfo => (
-          <div key={qInfo.id} onDragLeave={handleDragLeaveQuadrant} className="h-full">
+          <div key={qInfo.id} onDragLeave={handleDragLeaveQuadrant} className="h-full min-h-0">
             <Quadrant
               quadrantInfo={qInfo}
               tasks={getTasksByQuadrant(qInfo.id)}
